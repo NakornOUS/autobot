@@ -29,16 +29,16 @@ if (!is_null($events['events'])) {
 
             switch($event['message']['text']) {
                 
-                case 'tel':
+                case '-tel':
                     $respMessage = '089-5124512';
                     break;
-                case 'address':
+                case '-address':
                     $respMessage = '99/451 Muang Nonthaburi';
                     break;
-                case 'boss':
+                case '-boss':
                     $respMessage = '089-2541545';
                     break;
-                case 'idcard':
+                case '-idcard':
                     $respMessage = '5845122451245';
                     break;
                 default:
