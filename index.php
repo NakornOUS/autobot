@@ -48,7 +48,7 @@ if (!is_null($events['events'])) {
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
-										$respMessage =$result[0];
+										$respMessage =$result;
 								} 
 							else
 								{
