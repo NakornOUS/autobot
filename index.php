@@ -48,7 +48,8 @@ if (!is_null($events['events'])) {
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
-								$respMessage =$text_ex[1];
+								//$respMessage =$text_ex[1];
+								$respMessage = "คือ".$result['access_no']."\nผรม".$result['subcontractor'];
 								} 
 							else
 								{
