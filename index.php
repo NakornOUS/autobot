@@ -27,9 +27,11 @@ if (!is_null($events['events'])) {
             // Get replyToken
             $replyToken = $event['replyToken'];
 			// แยกตัวแปร
+			//รับข้อความจากผู้ใช้
+			//$message = $arrayJson['events'][0]['message']['text'];
 			$text = $event['message']['text'];
 			$text_ex = explode(':', $text); //เอาข้อความมาแยก : ได้เป็น Array
-            respMessage = $text;
+            $respMessage = $text;
 
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
