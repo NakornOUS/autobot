@@ -38,7 +38,7 @@ if (!is_null($events['events'])) {
 			//รับข้อความจากผู้ใช้
 			$message = $events['events'][0]['message']['text'];
 			$text_ex = explode(':', $message); //เอาข้อความมาแยก : ได้เป็น Array
-            $respMessage = $text_ex[0];
+            //$respMessage = $text_ex[0];
 				if($text_ex[0] == "subcon")
 				{ 
 				//$respMessage = $text_ex[1];
