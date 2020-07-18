@@ -49,7 +49,7 @@ if (!is_null($events['events'])) {
 							if($result !== false && $result->rowCount() >0) 
 								{
 								//$respMessage =$text_ex[1];
-								 while($row[] = $result->fetch_assoc())
+								 while($row[] = $result->fetch_array())
 									{
 									$Name = $row['access_no'];
 									$subcontractor = $row['subcontractor'];
