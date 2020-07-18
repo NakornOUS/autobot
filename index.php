@@ -49,7 +49,7 @@ if (!is_null($events['events'])) {
 							if($result !== false && $result->rowCount() >0) 
 								{
 								//$respMessage =$text_ex[1];
-								$respMessage = "คือ".$result['access_no']."\nผรม".$result['subcontractor'];
+								$respMessage =$result['subcontractor'];
 								} 
 							else
 								{
