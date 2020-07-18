@@ -45,22 +45,19 @@ if (!is_null($events['events'])) {
 				// Query
                             $sql = sprintf("SELECT * FROM Subcon WHERE access_no='$text_ex[1]'");
                             $result = $connection->query($sql);
-							if ($result == "0"){
-									$respMessage ="ไม่มีข้อมูล";
-									} else {
-										while($row = $result->fetch_assoc())
-										{
-											$Name = $row['Name'];
-											$Surname = $row['Surname'];
-											$CustomerID = $row['CustomerID'];
-										}
-										$replyText["text"] = "สวัสดีคุณ $Name $Surname (#$CustomerID)";
-											}
-							$respMessage = $result;
+							if($result !== false && $result->rowCount() >0) 
+								{
+								$respMessage =$text_ex[1];
+								} 
+							else
+								{
+										$respMessage ="ไม่มีข้อมูล";
+								}
 				}
-				else {
+				else 
+				{
                     $respMessage = 'ไม่มีคำสั่งนี้';
-                }
+				}
 
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
