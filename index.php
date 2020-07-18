@@ -26,24 +26,9 @@ if (!is_null($events['events'])) {
 
             // Get replyToken
             $replyToken = $event['replyToken'];
-
-            switch($event['message']['text']) {
-                
-                case '-tel':
-                    $respMessage = '089-5124512';
-                    break;
-                case '-address':
-                    $respMessage = '99/451 Muang Nonthaburi';
-                    break;
-                case '-boss':
-                    $respMessage = '089-2541545';
-                    break;
-                case '-idcard':
-                    $respMessage = '5845122451245';
-                    break;
-                default:
-                    break;
-            }
+			$text = $event['message']['text']
+			$text_ex = explode(':', $text); //เอาข้อความมาแยก : ได้เป็น Array
+            respMessage = $text_ex[0];
 
             $httpClient = new CurlHTTPClient($channel_token);
             $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
