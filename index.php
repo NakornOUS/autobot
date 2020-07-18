@@ -48,15 +48,7 @@ if (!is_null($events['events'])) {
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
-								//$respMessage =$text_ex[1];
-								 while($row[] = $result->fetch_array())
-									{
-									$Name = $row['access_no'];
-									$subcontractor = $row['subcontractor'];
-									$CustomerID = $row['province'];
-									}
-								//$replyText["text"] = "สวัสดีคุณ $Name $Surname (#$CustomerID)";
-								$respMessage =$subcontractor;
+										$respMessage =$result[0];
 								} 
 							else
 								{
