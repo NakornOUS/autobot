@@ -44,7 +44,7 @@ if (!is_null($events['events'])) {
 				{ 
 				//$respMessage = $text_ex[1];
 				// Query
-                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no='9103091584'");
+                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no=='9103091584'");
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
