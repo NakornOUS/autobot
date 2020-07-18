@@ -26,7 +26,7 @@ if (!is_null($events['events'])) {
 
             // Get replyToken
             $replyToken = $event['replyToken'];
-			$text = $event['message']['text']
+			$text = $event['message']['text'];
 			$text_ex = explode(':', $text); //เอาข้อความมาแยก : ได้เป็น Array
             respMessage = $text_ex[0];
 
