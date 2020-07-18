@@ -9,8 +9,16 @@ use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use \LINE\LINEBot;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
+//Token
 $channel_token = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU=';
 $channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
+
+// Database connection 
+$host = 'ec2-3-216-129-140.compute-1.amazonaws.com';
+$dbname = 'dbvmu2coiaa2rd';
+$user = 'mpndlrkjmdpngd';
+$pass = 'e13e293509484313814ada8dfdd44aff4db023173cfde906d7d01e22c49242de';
+$connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
 
 // Get message from Line API
 $content = file_get_contents('php://input');
@@ -33,10 +41,14 @@ if (!is_null($events['events'])) {
             $respMessage = $text_ex[0];
 				if($text_ex[0] == "subcon")
 				{ 
-				$respMessage = $text_ex[1];
+				//$respMessage = $text_ex[1];
+				// Query
+                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no= "$text_ex[1]"");
+                            $result = $connection->query($sql);
+							$respMessage = $result;
 				}
 				else {
-                    $respMessage = 'คุณได้ตอบโพลล์นี้แล้ว';
+                    $respMessage = 'ไม่มีคำสั่งนี้';
                 }
 
             $httpClient = new CurlHTTPClient($channel_token);
