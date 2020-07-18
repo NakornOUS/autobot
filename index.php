@@ -34,8 +34,9 @@ if (!is_null($events['events'])) {
 
             // Get replyToken
             $replyToken = $event['replyToken'];
+			
+			//รับข้อความ
 			// แยกตัวแปร
-			//รับข้อความจากผู้ใช้
 			$message = $events['events'][0]['message']['text'];
 			$text_ex = explode(':', $message); //เอาข้อความมาแยก : ได้เป็น Array
             //$respMessage = $text_ex[0];
@@ -43,7 +44,7 @@ if (!is_null($events['events'])) {
 				{ 
 				//$respMessage = $text_ex[1];
 				// Query
-                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no='$text_ex[1]'");
+                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no='9103091584'");
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
