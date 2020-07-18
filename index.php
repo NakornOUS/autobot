@@ -29,9 +29,8 @@ if (!is_null($events['events'])) {
 			// แยกตัวแปร
 			//รับข้อความจากผู้ใช้
 			$message = $events['events'][0]['message']['text'];
-			//$text = $event['message']['text'];
 			$text_ex = explode(':', $message); //เอาข้อความมาแยก : ได้เป็น Array
-            $respMessage = "" $text_ex[0] "\n\r"$text_ex[1];
+            $respMessage = $text_ex[0] "///////" $text_ex[1];
 			
 
             $httpClient = new CurlHTTPClient($channel_token);
