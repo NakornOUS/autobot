@@ -43,7 +43,7 @@ if (!is_null($events['events'])) {
 				{ 
 				//$respMessage = $text_ex[1];
 				// Query
-                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no= "$text_ex[1]"");
+                            $sql = sprintf("SELECT * FROM public."Subcon" WHERE access_no= "$text_ex[1]"");
                             $result = $connection->query($sql);
 							if ($result == "0"){
 									$respMessage = "ไม่มีข้อมูล" $text_ex[1];
