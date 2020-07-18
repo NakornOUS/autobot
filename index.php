@@ -43,8 +43,19 @@ if (!is_null($events['events'])) {
 				{ 
 				//$respMessage = $text_ex[1];
 				// Query
-                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no= "$text_ex[1]"");
+                            $sql = sprintf("SELECT * FROM Subcon WHERE access_no= '$text_ex[1]'");
                             $result = $connection->query($sql);
+							if ($result == "0"){
+									$respMessage["text"] = "สวัสดีคับบบบ";
+									} else {
+										while($row = $result->fetch_assoc())
+										{
+											$Name = $row['Name'];
+											$Surname = $row['Surname'];
+											$CustomerID = $row['CustomerID'];
+										}
+										$replyText["text"] = "สวัสดีคุณ $Name $Surname (#$CustomerID)";
+											}
 							$respMessage = $result;
 				}
 				else {
