@@ -50,7 +50,8 @@ if (!is_null($events['events'])) {
 								{
 									$row = $result -> fetch_array($connection);
 										//$amount = $result->rowCount();
-										$respMessage =$row[1];
+										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
+										$respMessage = $row[1];
 								} 
 							else
 								{
