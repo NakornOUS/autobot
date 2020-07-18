@@ -30,7 +30,7 @@ if (!is_null($events['events'])) {
 			//รับข้อความจากผู้ใช้
 			$message = $events['events'][0]['message']['text'];
 			//$text = $event['message']['text'];
-			$text_ex = explode(':', $text); //เอาข้อความมาแยก : ได้เป็น Array
+			$text_ex = explode(':', $message); //เอาข้อความมาแยก : ได้เป็น Array
             $respMessage = $message;
 
             $httpClient = new CurlHTTPClient($channel_token);
