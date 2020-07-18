@@ -49,11 +49,8 @@ if (!is_null($events['events'])) {
 							if($result !== false && $result->rowCount() >0) 
 								{
 									
-while ($row = $result->fetch_assoc()) {
-        $K= printf ("%s (%s)\n", $row["access_no"], $row["province"]);
-		$respMessage =$k[0];
-    }									//$amount = $result->fetch_assoc();
-										//$respMessage =$k[0];
+										$amount = $result->rowCount();
+										$respMessage =$amount;
 								} 
 							else
 								{
