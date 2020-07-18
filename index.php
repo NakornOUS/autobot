@@ -49,7 +49,14 @@ if (!is_null($events['events'])) {
 							if($result !== false && $result->rowCount() >0) 
 								{
 								//$respMessage =$text_ex[1];
-								$respMessage =$result['subcontractor'];
+								 while($row = $result->fetch_assoc())
+									{
+									$Name = $row['access_no'];
+									$subcontractor = $row['subcontractor'];
+									$CustomerID = $row['province'];
+									}
+								//$replyText["text"] = "สวัสดีคุณ $Name $Surname (#$CustomerID)";
+								$respMessage =$subcontractor;
 								} 
 							else
 								{
