@@ -52,21 +52,19 @@ if (!is_null($events['events'])) {
 									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage ="
-										Circuit: ".$row['access_no']."\n\r
-										ผรม: ".$row['subcontractor']."\n\r
-										จังหวัด: ".$row['province']."\n\r
-										วันที่ติดตั้ง: ".$row['installed_date']."\n\r
-										วันที่หมดประกัน: ".$row['waranty_expire_date']."\n\r
-										
+										$respMessage="
+										Circuit: ".$row['access_no']."\n
+										ผรม: ".$row['subcontractor']."\n
+										จังหวัด: ".$row['province']."\n
+										วันที่ติดตั้ง: ".$row['installed_date']."\n
+										วันที่หมดประกัน: ".$row['waranty_expire_date']."\n
 										==========
 										FOA 8 User Details:
 										==========
-										
-										Team Code: ".$row['team_code']."\n\r
-										FOA8 User: ".$row['wfm8_user']."\n\r
-										Staff Name: ".$row['staff_name']."\n\r
-										Tel: ".$row['phone']."\n\r
+										Team Code: ".$row['team_code']."\n
+										FOA8 User: ".$row['wfm8_user']."\n
+										Staff Name: ".$row['staff_name']."\n
+										Tel: ".$row['phone']."\n
 										"
 										;
 								} 
