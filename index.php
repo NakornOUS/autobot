@@ -63,16 +63,11 @@ if (!is_null($events['events'])) {
 				}
 				else 
 				{
-					if($text_ex[] == "-help")
-					{
+					
                    // $respMessage = "ไม่มีคำสั่งนี้ \n\r 
-					$respMessage ="ตัวอย่างคำสั่งที่ใช้ได้ \n\r
-					subcon:{circuit|96XXXXXXX}";
-					}
-					else
-								{
-										
-								}
+					//$respMessage ="ตัวอย่างคำสั่งที่ใช้ได้ \n\r
+					//subcon:{circuit|96XXXXXXX}";
+					
 				}
 
             $httpClient = new CurlHTTPClient($channel_token);
