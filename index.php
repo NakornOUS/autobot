@@ -53,10 +53,10 @@ if (!is_null($events['events'])) {
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
 										$respMessage="Circuit: ".$row['access_no']."\nผรม: ".$row['subcontractor']."\nจังหวัด: ".$row['province']."\nวันที่ติดตั้ง: ".$row['installed_date']."\nวันที่หมดประกัน: ".$row['waranty_expire_date']."\n
-										==========
-										FOA 8 User Details:
-										==========
-										Team Code: ".$row['team_code']."\nFOA8 User: ".$row['wfm8_user']."\nStaff Name: ".$row['staff_name']."\nTel: ".$row['phone']."\n
+										==========\n
+										FOA 8 User Details:\n
+										==========\n
+										\nTeam Code: ".$row['team_code']."\nFOA8 User: ".$row['wfm8_user']."\nStaff Name: ".$row['staff_name']."\nTel: ".$row['phone']."\n
 										"
 										;
 								} 
