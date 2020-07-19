@@ -52,7 +52,21 @@ if (!is_null($events['events'])) {
 									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage = "Circuit: ".$row['access_no']."\n\rผรม: ".$row['subcontractor']."\n\rจังหวัด: ".$row['province'];
+										$respMessage = "Circuit: ".$row['access_no']."\n\r
+										ผรม: ".$row['subcontractor']."\n\r
+										จังหวัด: ".$row['province']."\n\r
+										วันที่ติดตั้ง: ".$row['installed_date']."\n\r
+										วันที่หมดประกัน: ".$row['waranty_expire_date']."\n\r
+										==========
+										FOA 8 User Details:\n\r
+										==========
+										Team Code: ".$row['team_code']."\n\r
+										FOA8 User: ".$row['wfm8_user']."\n\r
+										Staff Name: ".$row['staff_name']."\n\r
+										Tel: ".$row['phone']."\n\r
+										Email:".$row['email']."\n\r
+										"
+										;
 								} 
 							else
 								{
@@ -61,7 +75,9 @@ if (!is_null($events['events'])) {
 				}
 				else 
 				{
-                    $respMessage = 'ไม่มีคำสั่งนี้';
+                    $respMessage = "ไม่มีคำสั่งนี้ \n\r 
+					ตัวอย่างคำสั่งที่ใช้ได้ \n\r
+					subcon:{circuit|96XXXXXXX}";
 				}
 
             $httpClient = new CurlHTTPClient($channel_token);
