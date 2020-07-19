@@ -52,11 +52,11 @@ if (!is_null($events['events'])) {
 									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage = $row['access_no']."\n \r".$row['province'];
+										$respMessage = "Circuit: ".$row['access_no']."\n\rผรม: ".$row['subcontractor']."\n\rจังหวัด: ".$row['province'];
 								} 
 							else
 								{
-										$respMessage ="ไม่มีข้อมูลของ  ".$text_ex[1];
+										$respMessage ="ไม่มีข้อมูลของ Circuit: ".$text_ex[1];
 								}
 				}
 				else 
