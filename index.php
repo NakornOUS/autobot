@@ -52,7 +52,7 @@ if (!is_null($events['events'])) {
 									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage = $row[access_no]"\n".$row[subcontractor];
+										$respMessage = $row[access_no]"\n \r"$row[province];
 								} 
 							else
 								{
