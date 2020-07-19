@@ -56,7 +56,7 @@ if (!is_null($events['events'])) {
 								} 
 							else
 								{
-										$respMessage ="ไม่มีข้อมูล";
+										$respMessage ="ไม่มีข้อมูลของ".$text_ex[1];
 								}
 				}
 				else 
