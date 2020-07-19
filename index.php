@@ -48,7 +48,7 @@ if (!is_null($events['events'])) {
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
-									$row = $result -> pg_fetch_array();
+									$row = $result ->fetchAll();
 									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
