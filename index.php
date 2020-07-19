@@ -53,7 +53,7 @@ if (!is_null($events['events'])) {
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
 										$respMessage="
-										Circuit: ".$row['access_no']."\n
+										Circuit: ".$row['access_no']."\r
 										ผรม: ".$row['subcontractor']."\n
 										จังหวัด: ".$row['province']."\n
 										วันที่ติดตั้ง: ".$row['installed_date']."\n
