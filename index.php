@@ -64,9 +64,9 @@ if (!is_null($events['events'])) {
 				else 
 				{
 					
-                   // $respMessage = "ไม่มีคำสั่งนี้ \n\r 
-					//$respMessage ="ตัวอย่างคำสั่งที่ใช้ได้ \n\r
-					//subcon:{circuit|96XXXXXXX}";
+                $respMessage = "ไม่มีคำสั่งนี้ \n\r 
+				ตัวอย่างคำสั่งที่ใช้ได้ \n\r
+				subcon:{circuit|96XXXXXXX}";
 					
 				}
 
