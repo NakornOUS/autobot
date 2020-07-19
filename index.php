@@ -48,11 +48,11 @@ if (!is_null($events['events'])) {
                             $result = $connection->query($sql);
 							if($result !== false && $result->rowCount() >0) 
 								{
-									//$row = $result -> fetch_array();
-									$row = pg_fetch_array($result);
+									$row = $result -> pg_fetch_array();
+									//$row = pg_fetch_array($result);
 										//$amount = $result->rowCount();
 										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage = $row['province'];
+										$respMessage = $row[1];
 								} 
 							else
 								{
