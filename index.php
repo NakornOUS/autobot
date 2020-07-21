@@ -14,15 +14,29 @@ $channel_token = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pH
 $channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
 
 // Database connection 
-$host = 'ec2-3-216-129-140.compute-1.amazonaws.com';
-$dbname = 'dbvmu2coiaa2rd';
-$user = 'mpndlrkjmdpngd';
-$pass = 'e13e293509484313814ada8dfdd44aff4db023173cfde906d7d01e22c49242de';
-$connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
+//$host = 'ec2-3-216-129-140.compute-1.amazonaws.com';
+//$dbname = 'dbvmu2coiaa2rd';
+//$user = 'mpndlrkjmdpngd';
+//$pass = 'e13e293509484313814ada8dfdd44aff4db023173cfde906d7d01e22c49242de';
+//$connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
 
 // Get message from Line API
 $content = file_get_contents('php://input');
 $events = json_decode($content, true);
+
+/*
+	 * We need to get a Google_Client object first to handle auth and api calls, etc.
+	 */
+	$client = new \Google_Client();
+    $client->setApplicationName('Google Sheets API PHP Quickstart');
+    $client->setScopes(\Google_Service_Sheets::SPREADSHEETS);
+    $client->setAuthConfig(__DIR__.'/autobot-284007-8735646db601.json');
+    $client->setAccessType('offline');
+    
+	// $client->setPrompt('select_account consent');
+    $service = new \Google_Service_Sheets($client);
+    $spreadsheetId = "1KM7Ldb6BjFOkwwQtKHcZNyuQTrsTa0qIcaY-3dlmdx0";
+
 
 if (!is_null($events['events'])) {
 
@@ -44,22 +58,23 @@ if (!is_null($events['events'])) {
 				{ 
 				//$respMessage = $text_ex[1];
 				// Query
-                            $sql = sprintf("SELECT * FROM subcon WHERE access_no='$text_ex[1]'");
-                            $result = $connection->query($sql);
-							if($result !== false && $result->rowCount() >0) 
+                            // GET DATA
+								$range = 'congress!D2:F1000000';
+								$response = $service->spreadsheets_values->get($spreadsheetId, $range);
+								$values = $response->getValues();
+
+								if(empty($values))
 								{
-									$row = $result ->fetch(PDO::FETCH_ASSOC);
-									//$row = pg_fetch_array($result);
-										//$amount = $result->rowCount();
-										//$respMessage =("%s (%s)\n", $row[0], $row[1]);
-										$respMessage="Circuit: ".$row['access_no']."\nผรม: ".$row['subcontractor']."\nจังหวัด: ".$row['province']."\nวันที่ติดตั้ง: ".$row['installed_date']."\nวันที่หมดประกัน: ".$row['waranty_expire_date']."\n==========\nTeam Code: ".$row['team_code']."\nFOA8 User: ".$row['wfm8_user']."\nStaff Name: ".$row['staff_name']."\nTel: ".$row['phone']."\n
-										"
-										;
-								} 
-							else
-								{
-										$respMessage ="ไม่มีข้อมูลของ Circuit: ".$text_ex[1];
+								$respMessage ="ไม่มีข้อมูลของ Circuit: ".$text_ex[1];
 								}
+								else
+									{
+								foreach ($values as $row) 
+										{
+								//echo $row[0]."<br/>";
+								$respMessage="Circuit: ".$row['0'];
+										}
+									}
 				}
 				else 
 				{
