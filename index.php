@@ -3,7 +3,8 @@
  * Use for return easy answer.
  */
 
-require_once('./vendor/autoload.php');
+//require_once('./vendor/autoload.php');
+require __DIR__ . '/vendor/autoload.php';
 
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use \LINE\LINEBot;
