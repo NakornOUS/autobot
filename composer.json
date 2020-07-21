@@ -1,10 +1,6 @@
 {
     "require": {
-        "linecorp/line-bot-sdk": "^4.5"
+        "linecorp/line-bot-sdk": "^4.5",
+        "google/apiclient": "^2.6"
     }
 }
-{
-    "require": {
-        "google/apiclient": "^2.0"
-      }
-   }
