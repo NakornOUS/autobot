@@ -59,9 +59,9 @@ if (!is_null($events['events'])) {
 				//$respMessage = $text_ex[1];
 				// Query
                             // GET DATA
-								$range = 'congress!D2:F1000000';
-								$response = $service->spreadsheets_values->get($spreadsheetId, $range);
-								$values = $response->getValues();
+								$range = 'congress!A2:K1000000';
+								$response1 = $service->spreadsheets_values->get($spreadsheetId, $range);
+								$values = $response1->getValues();
 
 								if(empty($values))
 								{
