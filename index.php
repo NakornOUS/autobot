@@ -3,6 +3,7 @@
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
 	require_once('./vendor/autoload.php');
+	require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
 	//require __DIR__ . '/vendor/autoload.php';
 	
 
@@ -10,7 +11,7 @@
 $channelAccessToken = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU='; 
 $channelSecret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
 #-------------------------[Events]-------------------------#
-$client = new LINEBotTiny($channelAccessToken, $channelSecret);
+$client = new LINEBotTiny($channelAccessToken,$channelSecret);
 $userId     = $client->parseEvents()[0]['source']['userId'];
 $groupId    = $client->parseEvents()[0]['source']['groupId'];
 $replyToken = $client->parseEvents()[0]['replyToken'];
