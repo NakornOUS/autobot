@@ -2,157 +2,133 @@
 	// ini_set('display_errors', 1);
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
-
-	require __DIR__ . '/vendor/autoload.php';
+	require_once('./vendor/autoload.php');
+	//require __DIR__ . '/vendor/autoload.php';
 	
 
-	/*Get Data From POST Http Request*/
-	$datas = file_get_contents('php://input');
-	/*Decode Json From LINE Data Body*/
-	$deCode = json_decode($datas,true);
+	/#-------------------------[Token]-------------------------#
+$channelAccessToken = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU='; 
+$channelSecret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
+#-------------------------[Events]-------------------------#
+$client = new LINEBotTiny($channelAccessToken, $channelSecret);
+$userId     = $client->parseEvents()[0]['source']['userId'];
+$groupId    = $client->parseEvents()[0]['source']['groupId'];
+$replyToken = $client->parseEvents()[0]['replyToken'];
+$timestamp  = $client->parseEvents()[0]['timestamp'];
+$type       = $client->parseEvents()[0]['type'];
+$message    = $client->parseEvents()[0]['message'];
+$profile    = $client->profil($userId);
+$repro = json_encode($profile);
+$messageid  = $client->parseEvents()[0]['message']['id'];
+$msg_type      = $client->parseEvents()[0]['message']['type'];
+$msg_message   = $client->parseEvents()[0]['message']['text'];
+$msg_title     = $client->parseEvents()[0]['message']['title'];
+$msg_address   = $client->parseEvents()[0]['message']['address'];
+$msg_latitude  = $client->parseEvents()[0]['message']['latitude'];
+$msg_longitude = $client->parseEvents()[0]['message']['longitude'];
+#----command option----#
+$usertext = explode(":", $message['text']);
+$command = $usertext[0];
+$options = $usertext[1];
 
-	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-
-	$replyToken = $deCode['events'][0]['replyToken'];
-	$userId = $deCode['events'][0]['source']['userId'];
-	$type = $deCode['events'][0]['type'];
-//Token
-	$token = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU=';
+$modex = file_get_contents('./user/' . $userId . 'mode.json');
 
 
-//$channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
-
-	$LINEProfileDatas['url'] = "https://api.line.me/v2/bot/profile/".$userId;
-  	$LINEProfileDatas['token'] = $token;
-
-  	$resultsLineProfile = getLINEProfile($LINEProfileDatas);
-
-  	$LINEUserProfile = json_decode($resultsLineProfile['message'],true);
-  	//$displayName = $LINEUserProfile['displayName'];
-
-	/*
-	  * We need to get a Google_Client object first to handle auth and api calls, etc.
-	 */
-	$client = new \Google_Client();
-    $client->setApplicationName('Google Sheets API PHP Quickstart');
-    $client->setScopes(\Google_Service_Sheets::SPREADSHEETS);
-    $client->setAuthConfig(__DIR__.'/autobot-284007-8735646db601.json');
-    $client->setAccessType('offline');
-    
-	// $client->setPrompt('select_account consent');
-    $service = new \Google_Service_Sheets($client);
-    $spreadsheetId = "1KM7Ldb6BjFOkwwQtKHcZNyuQTrsTa0qIcaY-3dlmdx0";
-
-    // updateData($spreadsheetId,$service);
-    //insertData($spreadsheetId,$service,$displayName);
-		getData($spreadsheetId,$service);
-	/*function insertData($spreadsheetId,$service,$displayName)
-    {
-    	// $range = 'congress!D2:F1000000';
-	    //INSERT DATA
-	    $range = 'a2';
-	    $values = [
-	    	[$displayName],
-	    ];
-	    $body = new Google_Service_Sheets_ValueRange([
-	    	'values' => $values
-	    ]);
-	    $params = [
-	    	'valueInputOption' => 'RAW'
-	    ];
-	    $insert = [
-	    	'insertDataOption' => 'INSERT_ROWS'
-	    ];
-	    $result = $service->spreadsheets_values->append(
-	    	$spreadsheetId,
-	    	$range,
-	    	$body,
-	    	$params,
-	    	$insert
-	    );
-    }*/
-
-    /*function updateData($spreadsheetId,$service)
-    {
-    	$range = 'a2:b2';
-    	$values = [
-	    	["Test","Test"],
-	    ];
-	    $body = new Google_Service_Sheets_ValueRange([
-	    	'values' => $values
-	    ]);
-    	$params = [
-	    	'valueInputOption' => 'RAW'
-	    ];
-	    $result = $service->spreadsheets_values->update(
-	    	$spreadsheetId,
-	    	$range,
-	    	$body,
-	    	$params
-	    );
-    }*/
-
-    function getData($spreadsheetId,$service)
-    {
-    	// GET DATA
-	    $range = 'congress!A2:K5';
-		$response = $service->spreadsheets_values->get($spreadsheetId, $range);
-		$values = $response->getValues();
-
-		if(empty($values)){
-			print "No Data Found.\n";
-		}else{
-			foreach ($values as $row) {
-				echo $row[0]."<br/>";
-			}
-		}
+if ($modex == 'Normal') {
+    $uri = "https://script.google.com/macros/s/AKfycby3Nam1j0Bcg4p5Hx_7mSK5Tt8evjosR3exq7uewxzH1q7RxP8/exec"; 
+    $response = Unirest\Request::get("$uri");
+    $json = json_decode($response->raw_body, true);
+    $results = array_filter($json['user'], function($user) use ($command) {
+    return $user['id'] == $command;
     }
+  );
 
-    function getLINEProfile($datas)
-	{
-		$datasReturn = [];
-
-		$curl = curl_init();
-
-		curl_setopt_array($curl, array(
-		  CURLOPT_URL => $datas['url'],
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "GET",
-		  CURLOPT_HTTPHEADER => array(
-		    "Authorization: Bearer ".$datas['token'],
-		    "Postman-Token: 32d99c7d-9f6e-4413-a4d2-fa0a9f1ecf6d",
-		    "cache-control: no-cache"
-		  ),
-		));
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
-            $datasReturn['result'] = 'E';
-            $datasReturn['message'] = $err;
-        } else {
-            if($response == "{}"){
-                $datasReturn['result'] = 'S';
-                $datasReturn['message'] = 'Success';
-            }else{
-                $datasReturn['result'] = 'E';
-                $datasReturn['message'] = $response;
-            }
-        }
-
-        return $datasReturn;
-	}
-
-    
-    
+$i=0;
+$bb = array();
+foreach($results as $resultsz){
+$bb[$i] = $resultsz;
+$i++;
+}
 
 
-	
+$textz .= "กรุณาระบุชื่อที่ต้องการค้นหา";
+$textz .= "\n";
+$textz .= $bb['0']['name'];
+$textz .= "\n";
+$textz .= $bb['1']['name'];
+$textz .= "\n";
+$textz .= $bb['2']['name'];
+$textz .= "\n";
+$textz .= $bb['3']['name'];
+$textz .= "\n";
+$textz .= $bb['4']['name'];
+    $mreply = array(
+        'replyToken' => $replyToken,
+        'messages' => array( 
+          array(
+                'type' => 'text',
+                'text' => $textz
+     )
+     )
+     );
 
+$enbb = json_encode($bb);
+    file_put_contents('./user/' . $userId . 'data.json', $enbb);
+    file_put_contents('./user/' . $userId . 'mode.json', 'keyword');
+}
+
+elseif ($modex == 'keyword') {
+    $urikey = file_get_contents('./user/' . $userId . 'data.json');
+    $deckey = json_decode($urikey, true);
+
+    $results = array_filter($deckey, function($user) use ($command) {
+    return $user['name'] == $command;
+    }
+  );
+
+
+$i=0;
+$zaza = array();
+foreach($results as $resultsz){
+$zaza[$i] = $resultsz;
+$i++;
+}
+
+$enzz = json_encode($zaza);
+    file_put_contents('./user/' . $userId . 'data.json', $enzz);
+
+$text .= "result";
+$text .= "\n";
+$text .= $zaza[0][id];
+$text .= " - ";
+$text .= $zaza[0][name];
+$text .= " - ";
+$text .= $zaza[0][num];
+$text .= " - ";
+$text .= $zaza[0][other];
+    $mreply = array(
+        'replyToken' => $replyToken,
+        'messages' => array( 
+          array(
+                'type' => 'text',
+                'text' => $text
+     )
+     )
+     );
+
+    file_put_contents('./user/' . $userId . 'mode.json', 'Normal');
+}
+else {
+  file_put_contents('./user/' . $userId . 'mode.json', 'Normal');
+}
+
+
+
+
+
+if (isset($mreply)) {
+    $result = json_encode($mreply);
+    $client->replyMessage($mreply);
+}  
+
+?>
