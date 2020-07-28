@@ -6,7 +6,7 @@
 	//require __DIR__ . '/vendor/autoload.php';
 	
 
-	/#-------------------------[Token]-------------------------#
+	//#-------------------------[Token]-------------------------#
 $channelAccessToken = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU='; 
 $channelSecret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
 #-------------------------[Events]-------------------------#
@@ -53,7 +53,7 @@ $i++;
 
 $textz .= "กรุณาระบุชื่อที่ต้องการค้นหา";
 $textz .= "\n";
-$textz .= $bb['0']['name'];
+$textz .= $bb['0']['acess_no'];
 $textz .= "\n";
 $textz .= $bb['1']['name'];
 $textz .= "\n";
