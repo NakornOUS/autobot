@@ -95,7 +95,7 @@
     function getData($spreadsheetId,$service)
     {
     	// GET DATA
-	    $range = 'congress!A2:K1000000';
+	    $range = 'congress!A2:K5';
 		$response = $service->spreadsheets_values->get($spreadsheetId, $range);
 		$values = $response->getValues();
 
