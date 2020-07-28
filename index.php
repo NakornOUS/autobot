@@ -45,7 +45,7 @@
 
     // updateData($spreadsheetId,$service);
     //insertData($spreadsheetId,$service,$displayName);
-
+		getData($spreadsheetId,$service);
 	/*function insertData($spreadsheetId,$service,$displayName)
     {
     	// $range = 'congress!D2:F1000000';
