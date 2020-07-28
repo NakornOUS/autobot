@@ -22,13 +22,13 @@
 
 //$channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
 
-	/*$LINEProfileDatas['url'] = "https://api.line.me/v2/bot/profile/".$userId;
+	$LINEProfileDatas['url'] = "https://api.line.me/v2/bot/profile/".$userId;
   	$LINEProfileDatas['token'] = $token;
 
   	$resultsLineProfile = getLINEProfile($LINEProfileDatas);
 
   	$LINEUserProfile = json_decode($resultsLineProfile['message'],true);
-  	$displayName = $LINEUserProfile['displayName'];*/
+  	//$displayName = $LINEUserProfile['displayName'];
 
 	/*
 	  * We need to get a Google_Client object first to handle auth and api calls, etc.
