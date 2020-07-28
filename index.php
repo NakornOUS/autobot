@@ -1,32 +1,37 @@
 <?php
-/**
- * Use for return easy answer.
- */
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
 
-require_once('./vendor/autoload.php');
-//require __DIR__ . '/vendor/autoload.php';
+	require __DIR__ . '/vendor/autoload.php';
+	
 
-use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
-use \LINE\LINEBot;
-use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+	/*Get Data From POST Http Request*/
+	$datas = file_get_contents('php://input');
+	/*Decode Json From LINE Data Body*/
+	$deCode = json_decode($datas,true);
 
+	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
+
+	$replyToken = $deCode['events'][0]['replyToken'];
+	$userId = $deCode['events'][0]['source']['userId'];
+	$type = $deCode['events'][0]['type'];
 //Token
-$channel_token = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU=';
-$channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
+	$token = 'LCbmoMjbF2nRv/Otz/dWhlTDAFIEDWQhmQrcAwn2xz9wEm8/OZcznhNKgVt6pHAkixKM/w4CbrVXb+AVb+uUbQ4sEhsCliL9/TaY57smH118ZKmo+OiV/biDXkJzzeFq1zGtFu12OQslMNbkSeEYywdB04t89/1O/w1cDnyilFU=';
 
-// Database connection 
-//$host = 'ec2-3-216-129-140.compute-1.amazonaws.com';
-//$dbname = 'dbvmu2coiaa2rd';
-//$user = 'mpndlrkjmdpngd';
-//$pass = 'e13e293509484313814ada8dfdd44aff4db023173cfde906d7d01e22c49242de';
-//$connection = new PDO("pgsql:host=$host;dbname=$dbname", $user, $pass); 
 
-// Get message from Line API
-$content = file_get_contents('php://input');
-$events = json_decode($content, true);
+//$channel_secret = 'b3ae34bda8a0a53b84a4ab8d11dc3106';
 
-/*
-	 * We need to get a Google_Client object first to handle auth and api calls, etc.
+	$LINEProfileDatas['url'] = "https://api.line.me/v2/bot/profile/".$userId;
+  	$LINEProfileDatas['token'] = $token;
+
+  	$resultsLineProfile = getLINEProfile($LINEProfileDatas);
+
+  	$LINEUserProfile = json_decode($resultsLineProfile['message'],true);
+  	$displayName = $LINEUserProfile['displayName'];
+
+	/*
+	  * We need to get a Google_Client object first to handle auth and api calls, etc.
 	 */
 	$client = new \Google_Client();
     $client->setApplicationName('Google Sheets API PHP Quickstart');
@@ -38,62 +43,116 @@ $events = json_decode($content, true);
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = "1KM7Ldb6BjFOkwwQtKHcZNyuQTrsTa0qIcaY-3dlmdx0";
 
+    // updateData($spreadsheetId,$service);
+    insertData($spreadsheetId,$service,$displayName);
 
-if (!is_null($events['events'])) {
+	/*function insertData($spreadsheetId,$service,$displayName)
+    {
+    	// $range = 'congress!D2:F1000000';
+	    //INSERT DATA
+	    $range = 'a2';
+	    $values = [
+	    	[$displayName],
+	    ];
+	    $body = new Google_Service_Sheets_ValueRange([
+	    	'values' => $values
+	    ]);
+	    $params = [
+	    	'valueInputOption' => 'RAW'
+	    ];
+	    $insert = [
+	    	'insertDataOption' => 'INSERT_ROWS'
+	    ];
+	    $result = $service->spreadsheets_values->append(
+	    	$spreadsheetId,
+	    	$range,
+	    	$body,
+	    	$params,
+	    	$insert
+	    );
+    }*/
 
-	// Loop through each event
-	foreach ($events['events'] as $event) {
-    
-        // Line API send a lot of event type, we interested in message only.
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+    /*function updateData($spreadsheetId,$service)
+    {
+    	$range = 'a2:b2';
+    	$values = [
+	    	["Test","Test"],
+	    ];
+	    $body = new Google_Service_Sheets_ValueRange([
+	    	'values' => $values
+	    ]);
+    	$params = [
+	    	'valueInputOption' => 'RAW'
+	    ];
+	    $result = $service->spreadsheets_values->update(
+	    	$spreadsheetId,
+	    	$range,
+	    	$body,
+	    	$params
+	    );
+    }*/
 
-            // Get replyToken
-            $replyToken = $event['replyToken'];
-			
-			//รับข้อความ
-			// แยกตัวแปร
-			$message = $events['events'][0]['message']['text'];
-			$text_ex = explode(':', $message); //เอาข้อความมาแยก : ได้เป็น Array
-            //$respMessage = $text_ex[0];
-				if($text_ex[0] == "subcon")
-				{ 
-				//$respMessage = $text_ex[1];
-				// Query
-                            // GET DATA
-								$range = 'congress!A2:K1000000';
-								$response1 = $service->spreadsheets_values->get($spreadsheetId, $range);
-								$values = $response1->getValues();
+    function getData($spreadsheetId,$service)
+    {
+    	// GET DATA
+	    $range = 'congress!A2:K1000000';
+		$response = $service->spreadsheets_values->get($spreadsheetId, $range);
+		$values = $response->getValues();
 
-								if(empty($values))
-								{
-								$respMessage ="ไม่มีข้อมูลของ Circuit: ".$text_ex[1];
-								}
-								else
-									{
-								foreach ($values as $row) 
-										{
-								//echo $row[0]."<br/>";
-								$respMessage="Circuit: ".$row['0'];
-										}
-									}
-				}
-				else 
-				{
-					
-                //$respMessage = "ไม่มีคำสั่งนี้ \n\r 
-				//ตัวอย่างคำสั่งที่ใช้ได้ \n\r
-				//subcon:{circuit|96XXXXXXX}";
-					
-				}
-
-            $httpClient = new CurlHTTPClient($channel_token);
-            $bot = new LINEBot($httpClient, array('channelSecret' => $channel_secret));
-
-            $textMessageBuilder = new TextMessageBuilder($respMessage);
-            $response = $bot->replyMessage($replyToken, $textMessageBuilder);
-
+		if(empty($values)){
+			print "No Data Found.\n";
+		}else{
+			foreach ($values as $row) {
+				echo $row[0]."<br/>";
+			}
 		}
-	}
-}
+    }
 
-echo "OK";
+    function getLINEProfile($datas)
+	{
+		$datasReturn = [];
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => $datas['url'],
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_HTTPHEADER => array(
+		    "Authorization: Bearer ".$datas['token'],
+		    "Postman-Token: 32d99c7d-9f6e-4413-a4d2-fa0a9f1ecf6d",
+		    "cache-control: no-cache"
+		  ),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+            $datasReturn['result'] = 'E';
+            $datasReturn['message'] = $err;
+        } else {
+            if($response == "{}"){
+                $datasReturn['result'] = 'S';
+                $datasReturn['message'] = 'Success';
+            }else{
+                $datasReturn['result'] = 'E';
+                $datasReturn['message'] = $response;
+            }
+        }
+
+        return $datasReturn;
+	}
+
+    
+    
+
+
+	
+
